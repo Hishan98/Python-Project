@@ -27,15 +27,21 @@ def talk():
                 #____Main Controllers___#  
 
                 if "Facebook" in text:
-                    import Facebook_Gmail as fg
-                    fg.facebook()
+                    condition = "Facebook"
+                    print("Share/Like/Comment")
+                    vv.talk(condition)
+                    print("Thank You For using Facebook") 
 
-                if "Google" in text:
-                    import Facebook_Gmail as fg
-                    fg.google()
+                elif "Google" in text:
+                    condition = "Google"
+                    print("Search your content")
+                    vv.talk(condition)
+                    print("Thank You For using Google") 
                     
-                if "eBay" in text:
-                    vv.talk()
+                elif "eBay" in text:
+                    condition = "eBay"
+                    print("Please select what you want to do in here..")
+                    vv.talk(condition)
                     print("Thank You For using Ebay")  
 
             except:

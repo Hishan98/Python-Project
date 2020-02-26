@@ -11,20 +11,30 @@ from gtts import gTTS
 #         playsound.playsound(filename)
 # speak("Hi Guys")
 
-
-def talk():
-    text=""
-    print("Please select what you want to do in here..")
+condition = ""
+def talk(condition):
+    text=""   
     while text!="exit":
-
+        print(condition)
         r = sr.Recognizer()
         with sr.Microphone() as source:
             audio = r.listen(source)      
             try:  
                 text = r.recognize_google(audio)
                 print("You said : {}".format(text))
-                import ebay as ebay
-                ebay.commands(text) 
+
+                if condition=="eBay":
+                    import ebay as ebay
+                    ebay.commands(text)
+
+                if condition=="Facebook":
+                    print("condition")
+                    import Facebook_Gmail as fg
+                    fg.facebook()
+                    
+                if condition=="Google":
+                    import Facebook_Gmail as fg
+                    fg.google(text)                   
             except:
                 print("Sorry could not recognize what you said")
     
