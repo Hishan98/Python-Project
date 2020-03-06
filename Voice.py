@@ -27,14 +27,15 @@ def talk(condition):
                     import ebay as ebay
                     ebay.commands(text)
 
-                if condition=="Facebook":
+                elif condition=="Facebook":
                     print("condition")
                     import Facebook_Gmail as fg
                     fg.facebook()
                     
-                if condition=="Google":
+                elif condition=="Google":
                     import Facebook_Gmail as fg
-                    fg.google(text)                   
+                    fg.google(text)
+               
             except:
                 print("Sorry could not recognize what you said")
     
