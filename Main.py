@@ -1,43 +1,53 @@
-import speech_recognition as sr
 import playsound
-import Voice as vv
 import speech as sp
+import speechRecognizer as recog
 
-
-
-def talk():
-    text=""   
+def site_selection():   
+    text=""
     while text!="exit":
+        sp.speak("Please select your web site")
+        try: 
+            text=recog.talk()
+            if "Facebook" in text:
+                condition = "Facebook"
+                print("Share/Like/Comment")
+                in_site_selection(condition)
+                print("Thank You For using Facebook") 
 
-        r = sr.Recognizer()
-        sp.speak("Please select your web site") 
-        with sr.Microphone() as source:
-            audio = r.listen(source)             
-            try:
-                text = r.recognize_google(audio)
-                print("You said : {}".format(text))               
-                #____Main Controllers___#  
+            elif "Google" in text:
+                condition = "Google"
+                print("Search your content")
+                in_site_selection(condition)
+                print("Thank You For using Google") 
+                            
+            elif "eBay" in text:
+                condition = "eBay"
+                sp.speak("eBay it is")
+                in_site_selection(condition)
+                print("Thank You For using Ebay")
+        except:
+            print("Unknown Command (site_selection)")    
 
-                if "Facebook" in text:
-                    condition = "Facebook"
-                    print("Share/Like/Comment")
-                    vv.talk(condition)
-                    print("Thank You For using Facebook") 
+def in_site_selection(condition):
+    text=""
+    sp.speak("Please select what you want to do in here") 
+    while text!="exit":    
+        try:
+            text=recog.talk()
+            if condition=="eBay":
+                import ebay as ebay
+                ebay.commands(text)
 
-                elif "Google" in text:
-                    condition = "Google"
-                    print("Search your content")
-                    vv.talk(condition)
-                    print("Thank You For using Google") 
-                    
-                elif "eBay" in text:
-                    condition = "eBay"
-                    sp.speak("eBay it is")  
-                    print("Please select what you want to do in here..")
-                    vv.talk(condition)
-                    print("Thank You For using Ebay")  
+            elif condition=="Facebook":
+                print("condition")
+                import Facebook_Gmail as fg
+                fg.facebook()
+                            
+            elif condition=="Google":
+                import Facebook_Gmail as fg
+                fg.google(text)
+        except:
+            print("Unknown Command (in_site_selection)")   
 
-            except:
-                sp.speak("Sorry could not recognize what you said")
-    
-talk()
+
+site_selection()

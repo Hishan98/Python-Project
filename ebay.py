@@ -8,7 +8,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from word2number import w2n
 
-import Voice as vv
 import ebay_error as ee
 import sys
 
@@ -24,12 +23,22 @@ wait = WebDriverWait(driver, 10)
 text=""
 def commands(text):
 
-    if "login" in text: 
-        ebay_sign_in_username()
-        ebay_sign_in_password()
+    if "login" in text:
+        url='https://www.ebay.com/signin/'
+        driver.get(url) 
+
+        ebay_sign_in("email")
+        ebay_sign_in("password")
         signin()
-    elif "sign up" in text:  
-        ebay_sign_up()
+    elif "sign up" in text: 
+        url='https://reg.ebay.com/reg/PartialReg'
+        driver.get(url)
+
+        ebay_sign_up("firstname")
+        ebay_sign_up("lastname")
+        ebay_sign_up("email")
+        ebay_sign_up("password")
+        signup()
     elif text=="exit": 
         driver.close()
     elif text=="back":
@@ -72,8 +81,8 @@ def commands(text):
     elif "V item" in text:
         click_sub_list(4)
     elif "set" in text:
-        import quentity as qt
-        qt.talk("ok","quentity")
+        import common as com
+        com.talk("quentity")
 
     # Buying Options
 
@@ -87,64 +96,96 @@ def commands(text):
         buy_it_now()
     elif "pay" in text:
         confirm_pay()
+
+    #Selling Options
+    elif "sell" in text:
+        import ebay_sell as eb
+        eb.sell(wait,driver)
+
     else:
         search(text)
 
-def ebay_sign_up():
-
-    url='https://reg.ebay.com/reg/PartialReg'
-    driver.get(url)
-
-    try:
-        wait.until(EC.title_contains("Sign in or Register | eBay"))
-        assert 'Sign in or Register | eBay' in driver.title
-
-        wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="firstname"]'))).send_keys('harly')
-        driver.find_element_by_xpath('//*[@id="lastname"]').send_keys('rox')
-        driver.find_element_by_xpath('//*[@id="email"]').send_keys('harlyrox3333@gmail.com')
-        driver.find_element_by_xpath('//*[@id="PASSWORD"]').send_keys('1385747h')
-        driver.find_element_by_xpath('//*[@id="showPASSWORD"]/ul/li/span[2]').click()
-
-    except Exception as e:
-        ee.err(wait,driver)
-        print('Fail Page' ,format(e))
     
+    #  _____________________________________________sign in Form______________________________________________
 
-def ebay_sign_in_username():
-   
-    url='https://www.ebay.com/signin/'
-    driver.get(url)
-    
+
+def ebay_sign_in(statement):  
+ 
     try:
         wait.until(EC.title_contains("Sign in or Register | eBay"))
         assert 'Sign in or Register | eBay' in driver.title
         wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="userid"]')))
 
-        import quentity as qt
-        print("enter your E-mail")
-        user = qt.talk("ok","username")
-        username=user.replace(" ", "")
-        wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="userid"]'))).send_keys(username)
+        import common as com
+        print("enter your "+ statement +" !!!")
+        user = com.talk(statement)
+        values=user.replace(" ", "")
+
+        if statement=="email":
+            wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="userid"]'))).send_keys(values)
+        else:
+            driver.find_element_by_xpath('//*[@id="pass"]').send_keys(values)
 
     except Exception as e:
-        ee.err(wait,driver)
-        print('Fail Page' ,format(e))
-
-def ebay_sign_in_password():
-
-    try:
-        import quentity as qt
-        print("Enter your Password")
-        passwd = qt.talk("ok","password")
-        password=passwd.replace(" ", "")
-        driver.find_element_by_xpath('//*[@id="pass"]').send_keys(password)
-
-    except Exception as e:
-        ee.err(wait,driver)
-        print('Fail Page' ,format(e))
+        print('Page Loading Failure:  ' ,format(e))
+        ee.check_error(wait,driver)
 
 def signin():
-    driver.find_element_by_xpath('//*[@id="sgnBt"]').click()
+    try:
+        driver.find_element_by_xpath('//*[@id="sgnBt"]').click()
+    except Exception as e:
+        print('Sign in information error !!! plz Try Again....' ,format(e))
+        commands("login")
+        
+
+    #   _____________________________________________END______________________________________________  
+    #---------------------------------------------------------------------------------------------------    
+
+
+
+    #  _____________________________________________Sign Up Form______________________________________________
+
+
+def ebay_sign_up(statement):
+
+    try:
+        wait.until(EC.title_contains("Sign in or Register | eBay"))
+        assert 'Sign in or Register | eBay' in driver.title
+
+        import common as com
+        print("enter your "+ statement +" !!!")
+        user = com.talk(statement)
+        values=user.replace(" ", "")
+
+        if statement=="firstname":
+            wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="firstname"]'))).send_keys(values)
+
+        elif statement=="lastname":
+            driver.find_element_by_xpath('//*[@id="lastname"]').send_keys(values)
+
+        elif statement=="email":
+            driver.find_element_by_xpath('//*[@id="email"]').send_keys(values)
+
+        elif statement=="password":
+            driver.find_element_by_xpath('//*[@id="PASSWORD"]').send_keys(values)
+            driver.find_element_by_xpath('//*[@id="showPASSWORD"]/ul/li/span[2]').click()
+
+    except Exception as e:
+        print('Page Loading Failure' ,format(e))
+        ee.check_error(wait,driver)
+        
+def signup():
+    try:
+        driver.find_element_by_xpath('//*[@id="ppaFormSbtBtn"]').click()
+    except Exception as e:
+        print('Sign up information error !!! plz retry ....' ,format(e))
+        commands("sign up")
+        
+
+
+    #   _____________________________________________END______________________________________________  
+    #---------------------------------------------------------------------------------------------------  
+
 
 def search(text):
         url='https://www.ebay.com/'

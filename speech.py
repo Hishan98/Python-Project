@@ -8,4 +8,3 @@ def speak(text):
         tts.save(filename)
         playsound.playsound(filename)
         os.remove(filename)
-#speak("Hi Guys")

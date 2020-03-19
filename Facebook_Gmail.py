@@ -10,10 +10,11 @@ from selenium.webdriver.support import expected_conditions as EC
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("detach", True)
+chrome_options.add_argument("--start-maximized")
+chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
 
 global driver
 driver = webdriver.Chrome('C:\Windows\chromedriver.exe', options=chrome_options)
-chrome_options.add_argument("--start-maximized")
 wait = WebDriverWait(driver, 10)
 
 def google(text): 
@@ -64,9 +65,8 @@ def google(text):
             except:
                 pass
     else:
-        ggwp=text.replace(" ", "")
         driver.get("https://www.google.com")
-        driver.find_element_by_xpath('//*[@id="tsf"]/div[2]/div[1]/div[1]/div/div[2]/input').send_keys(ggwp)
+        driver.find_element_by_xpath('//*[@id="tsf"]/div[2]/div[1]/div[1]/div/div[2]/input').send_keys(text)
         driver.find_element_by_xpath('//*[@id="tsf"]/div[2]/div[1]/div[3]/center/input[1]').send_keys(Keys.ENTER)
 
 def facebook():
