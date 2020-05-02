@@ -12,8 +12,8 @@ def talk(condition):
                 print("How many items do you want?")
                 if text != statement:
                     usrpss = text
-                # import ebay as eb
-                # eb.quantity(text)
+                # import Engine as eng
+                # eng.quantity(text)
                 # break
             
             elif condition == "email":
@@ -62,8 +62,8 @@ def talk(condition):
                     usrpss = text
 
             elif text == "back":
-                import ebay as eb
-                eb.back()
+                import Engine as eng
+                eng.back()
         except:
             print("Unknown Command !!!")
 

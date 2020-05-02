@@ -20,14 +20,14 @@ def check_error(wait,driver):
             # driver.get(url)
 
             # wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="userid"]')))
-            import ebay as ebay
-            ebay.commands("login")
+            import Engine as eng
+            eng.commands("login")
         else:
             err(wait,driver)
             # driver.delete_all_cookies()
             # driver.get("chrome://settings/clearBrowserData")
             # wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="clearBrowsingDataConfirm"]'))).click()
-            # import ebay as ebay
+            # import Engine as engay
             # ebay.commands("login")
     except:
         print("Redirecting...")

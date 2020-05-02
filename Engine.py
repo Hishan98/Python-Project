@@ -37,7 +37,6 @@ def ebay_sign_in(statement,txt_username,txt_password):
         wait.until(EC.element_to_be_clickable((By.XPATH,txt_username)))
 
         import common as com
-        print("enter your "+ statement +" !!!")
         user = com.talk(statement)
         values=user.replace(" ", "")
 
