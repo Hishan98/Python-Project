@@ -2,7 +2,9 @@ import playsound
 import speech as sp
 import speechRecognizer as recog
 
-def site_selection():   
+def site_selection():
+    sp.speak("Welcome to the talk & shop Application...")
+    sp.speak("If you are a new user please refer our user manual by simply saying help")   
     text=""
     while text!="exit":
         sp.speak("Please select your web site")
@@ -25,6 +27,11 @@ def site_selection():
                 sp.speak("eBay it is")
                 in_site_selection(condition)
                 print("Thank You For using Ebay")
+
+            elif "help" in text:
+                import Engine as eng
+                url='https://github.com/Hishan98/Python-Project/tree/master'
+                eng.Help(url)
         except:
             print("Unknown Command (site_selection)")    
 

@@ -30,6 +30,13 @@ def page_load(url):
     except Exception as identifier:
         print("Connection Error: "+identifier)
 
+def Help(url):
+    try:
+        driver.get(url)
+        driver.execute_script("window.scrollBy(0,1650)","") 
+    except Exception as identifier:
+        print("Connection Error: "+identifier)
+
 def ebay_sign_in(statement,txt_username,txt_password):  
  
     try:

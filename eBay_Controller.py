@@ -14,6 +14,10 @@ def commands(text):
         eng.ebay_sign_in("password",txt_username,txt_password)
         eng.signin(btn_signin)
 
+    elif "help" in text: 
+        url='https://github.com/Hishan98/Python-Project/tree/master'
+        eng.Help(url)
+
     elif "sign up" in text: 
         txt_firstname='//*[@id="firstname"]'
         txt_lastname='//*[@id="lastname"]'
