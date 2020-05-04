@@ -41,8 +41,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.Status.setText(_translate("MainWindow", "Listening."))
+        MainWindow.setWindowTitle(_translate("Talk & shop", "Talk & shop"))
+        self.Status.setText(_translate("txt 1", "Listening."))
+        self.Status.setText(_translate("txt2", "Pakoo."))
 
 if __name__ == "__main__":
     import sys
@@ -51,7 +52,5 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    import Main as ma
-    ma.talk()
     sys.exit(app.exec_())
     

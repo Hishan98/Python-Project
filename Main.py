@@ -35,8 +35,6 @@ def in_site_selection(condition):
         try:
             text=recog.talk()
             if condition=="eBay":
-                # import Engine as engay
-                # ebay.commands(text)
                 import eBay_Controller as ebay
                 ebay.commands(text)
 

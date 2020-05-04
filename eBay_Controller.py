@@ -55,35 +55,35 @@ def commands(text):
         getlist='//*[@id="srp-river-results"]/ul'
         getclass='s-item   '
         setnumber=1
-        getitem='//*[@id="srp-river-results-listing'+str(setnumber)+'"]/div/div[2]/a' 
+        getitem='//*[@id="srp-river-results"]/ul/li['+str(setnumber)+']/div/div[2]/a' 
         eng.click_list(getlist,getclass,getitem,setnumber)
 
     elif "second link" in text: 
         getlist='//*[@id="srp-river-results"]/ul'
         getclass='s-item   '
         setnumber=2
-        getitem='//*[@id="srp-river-results-listing'+str(setnumber)+'"]/div/div[2]/a' 
+        getitem='//*[@id="srp-river-results"]/ul/li['+str(setnumber)+']/div/div[2]/a' 
         eng.click_list(getlist,getclass,getitem,setnumber)
 
     elif "third link" in text:
         getlist='//*[@id="srp-river-results"]/ul'
         getclass='s-item   '
         setnumber=3
-        getitem='//*[@id="srp-river-results-listing'+str(setnumber)+'"]/div/div[2]/a' 
+        getitem='//*[@id="srp-river-results"]/ul/li['+str(setnumber)+']/div/div[2]/a' 
         eng.click_list(getlist,getclass,getitem,setnumber) 
 
     elif "fourth link" in text:
         getlist='//*[@id="srp-river-results"]/ul'
         getclass='s-item   '
         setnumber=4
-        getitem='//*[@id="srp-river-results-listing'+str(setnumber)+'"]/div/div[2]/a' 
+        getitem='//*[@id="srp-river-results"]/ul/li['+str(setnumber)+']/div/div[2]/a' 
         eng.click_list(getlist,getclass,getitem,setnumber) 
 
     elif "V link" in text:
         getlist='//*[@id="srp-river-results"]/ul'
         getclass='s-item   '
         setnumber=5
-        getitem='//*[@id="srp-river-results-listing'+str(setnumber)+'"]/div/div[2]/a' 
+        getitem='//*[@id="srp-river-results"]/ul/li['+str(setnumber)+']/div/div[2]/a' 
         eng.click_list(getlist,getclass,getitem,setnumber)    
 
     # Item selections (Colors/Sizes & etc.)
@@ -98,7 +98,6 @@ def commands(text):
         Selection=0
         getitem='//*[@id="msku-opt-'+str(Selection)+'"]'
         eng.click_sub_list(getlist,gettagname,getitem,Selection)
-
     elif "second item" in text:
         getlist='//*[@id="msku-sel-1"]'
         gettagname='option'
