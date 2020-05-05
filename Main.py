@@ -24,9 +24,21 @@ def site_selection():
                             
             elif "eBay" in text:
                 condition = "eBay"
-                sp.speak("eBay it is")
+                sp.speak("You have selected eBay..")
                 in_site_selection(condition)
-                print("Thank You For using Ebay")
+                sp.speak("Thank You For using eBay")
+
+            elif "aliexpress" in text:
+                condition = "aliexpress"
+                sp.speak("You have selected aliexpress..")
+                in_site_selection(condition)
+                sp.speak("Thank You For using aliexpress")
+
+            elif "Amazon" in text:
+                condition = "Amazon"
+                sp.speak("You have selected Amazon..")
+                in_site_selection(condition)
+                sp.speak("Thank You For using Amazon")    
 
             elif "help" in text:
                 import Engine as eng
@@ -44,6 +56,14 @@ def in_site_selection(condition):
             if condition=="eBay":
                 import eBay_Controller as ebay
                 ebay.commands(text)
+
+            elif condition=="aliexpress":
+                import aliExpress_Controller as aliexp
+                aliexp.commands(text)
+                
+            elif condition=="Amazon":
+                import Amazon_Controller as amazon
+                amazon.commands(text)
 
             elif condition=="Facebook":
                 print("condition")

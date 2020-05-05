@@ -196,6 +196,7 @@ def quantity(statement,txt_quantity):
             sp.speak("setting " +qty+ " items") 
             wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).send_keys(qun)
     except Exception as e:
+        sp.speak("cannot identify the number") 
         print ("Unidentifyied number type",format(e))
 
 
@@ -205,12 +206,12 @@ def search(url,txt_searchbar):
             print('What you want to buy....')
             sp.speak("What you want to buy....") 
             text = recog.talk()
-            driver.get(url)
             if not text:
                 print('Cannot search Emphty values. Please try Again by saying "search" command')
                 sp.speak("Cannot search Emphty value.")
             else:   
                 sp.speak("say OK confirm search for" +text) 
+                driver.get(url)
                 wait.until(EC.element_to_be_clickable((By.XPATH,txt_searchbar))).send_keys(text)    
 
         except Exception as e:
@@ -313,3 +314,230 @@ def backspace(txt_backspace):
     except Exception as identifier:
         print('Unexpected error occored :' ,format(identifier))
         sp.speak("cannot use confirm pay command in this page") 
+
+def unknown_command():
+    try:
+        sp.speak("You entered an Unknown command...")   
+    except Exception as identifier:
+        print('Text to speech function not working correctly :' ,format(identifier))    
+
+# _______________________________ali-Express Diffrent controllers________________________________
+
+def ali_sign_up(statement,txt_email,txt_password,btn_show_password):
+
+    try:
+        # wait.until(EC.title_contains("Sign in or Register | eBay"))
+        # assert 'Sign in or Register | eBay' in driver.title
+
+        import common as com
+        print("enter your "+ statement +" !!!")
+        user = com.talk(statement)
+        values=user.replace(" ", "")
+
+        # if statement=="firstname":
+        #     wait.until(EC.element_to_be_clickable((By.XPATH,txt_firstname))).send_keys(values)
+
+        if statement=="email":
+            driver.find_element_by_xpath(txt_email).send_keys(values)
+
+        elif statement=="password":
+            driver.find_element_by_xpath(txt_password).send_keys(values)
+            driver.find_element_by_xpath(btn_show_password).click()
+
+    except Exception as e:
+        print('Page Loading Failure' ,format(e))
+        ee.check_error(wait,driver)
+
+def ali_signup_page(signup_page):
+    try:
+        wait.until(EC.element_to_be_clickable((By.XPATH,signup_page))).click()
+    except:
+        print('connot open register page')
+
+def ali_signup(btn_signup):
+    try:
+        driver.find_element_by_xpath(btn_signup).click()
+    except Exception as e:
+        print('Sign up information error !!! plz retry ....' ,format(e))
+        import aliExpress_Controller as ali
+        ali.commands("login")
+        
+def ali_click_list(getlist,getclass,getitem,setnumber,try_getitem):
+    try:
+        html_list = driver.find_element_by_xpath(getlist)
+        items = html_list.find_elements_by_class_name(getclass)
+        count =len(items)
+        print("There are "+str(count)+" items in this list")
+        
+        if setnumber in range (count):
+            try:
+                sp.speak("Opening link" + str(setnumber))
+                try: 
+                    driver.find_element_by_xpath(getitem).click()
+                except:
+                    driver.find_element_by_xpath(try_getitem).click()
+            except Exception as e:
+                sp.speak("sorry.you cannot open that link") 
+                print ("Unexpected error :" ,format(e))
+    except Exception as ee:
+        print (ee)
+
+def ali_click_sub_list(getlist,gettagname,getitem,Selection,trygetlist):
+    try:
+        # driver.switchTo().defaultContent()
+        
+        wait.until(EC.element_to_be_clickable((By.XPATH,getitem)))
+        driver.find_element_by_xpath(getitem).click()
+
+        # wait.until(EC.element_to_be_clickable((By.XPATH,getitem)))
+        # html_list = driver.find_element_by_xpath(getlist)
+        # items = html_list.find_elements_by_class_name(gettagname)
+        # count =len(items)
+        # print("There are "+ str(count) +" items in this list")
+
+        # if Selection in range (count):
+        #     try:
+        #         driver.find_element_by_xpath(getitem).click()
+
+        #     except Exception as identifier:
+        #         print('Error occoured :' ,format(identifier))
+        # else:
+        #     print("There is no such an item on this list")
+
+    except Exception as identifier:
+        print('Error occoured :' ,format(identifier))
+        
+def close_ads(btn_close):
+    try:
+        wait.until(EC.element_to_be_clickable((By.XPATH,btn_close))).click()
+    except:
+        print('connot close the ads')
+        
+# _______________________________Amazon Diffrent controllers________________________________
+
+def enter_otp(statement,txt_OTP):
+    try:
+        import common as com
+        print("enter your "+ statement +" !!!")
+        user = com.talk(statement)
+        values=user.replace(" ", "")
+
+        driver.find_element_by_xpath(txt_OTP).send_keys(values)
+
+    except Exception as identifier:
+        print('Error occoured :' ,format(identifier))
+
+def btn_otp(btn_OTP):
+    try:
+        wait.until(EC.element_to_be_clickable((By.XPATH,btn_OTP))).click()
+    except Exception as identifier:
+        print('Error occoured :' ,format(identifier))
+
+def resend_otp(btn_resendOTP):
+    try:
+        wait.until(EC.element_to_be_clickable((By.XPATH,btn_resendOTP))).click()
+    except Exception as identifier:
+        print('Error occoured :' ,format(identifier))
+
+def amazon_sign_up(statement,txt_firstname,txt_email,txt_password,txt_re_password):
+
+    try:
+        import common as com
+        print("enter your "+ statement +" !!!")
+        user = com.talk(statement)
+        values=user.replace(" ", "")
+
+        if statement=="firstname":
+            wait.until(EC.element_to_be_clickable((By.XPATH,txt_firstname))).send_keys(values)
+
+        elif statement=="email":
+            driver.find_element_by_xpath(txt_email).send_keys(values)
+
+        elif statement=="password":
+            driver.find_element_by_xpath(txt_password).send_keys(values)
+            driver.find_element_by_xpath(txt_re_password).send_keys(values)
+
+    except Exception as e:
+        print('Page Loading Failure' ,format(e))
+        ee.check_error(wait,driver)
+
+def amazon_signup(btn_signup):
+    try:
+        driver.find_element_by_xpath(btn_signup).click()
+    except Exception as e:
+        print('Sign up information error !!! plz retry ....' ,format(e))
+        import Amazon_Controller as amazon
+        amazon.commands("login")
+
+def amazon_signin_continue(btn_continue):
+    try:
+        driver.find_element_by_xpath(btn_continue).click()
+    except Exception as e:
+        print('Sign in Continue button cannot click :' ,format(e))
+
+def amazon_signin_auth(btn_auth):
+    try:
+        driver.find_element_by_xpath(btn_auth).click()
+    except Exception as e:
+        print('Sign in auth button cannot click' ,format(e))
+
+def common_button_click(btn_id):
+    try:
+        driver.find_element_by_xpath(btn_id).click()
+    except Exception as e:
+        print('Sign in auth button cannot click' ,format(e))
+
+def buyingopt_button_click(btn_id):
+    add_to_cart2 ='//*[@id="a-autoid-4"]/span/input'
+    try:
+        driver.find_element_by_xpath(btn_id).click()
+        wait.until(EC.element_to_be_clickable((By.XPATH,add_to_cart2))).click()
+    except Exception as e:
+        print('Sign in auth button cannot click' ,format(e))
+
+def add_a_card(statement,card_name,card_number):
+    try:
+        import common as com
+        print("enter your "+ statement +" !!!")
+        user = com.talk(statement)
+        values=user.replace(" ", "")
+
+        if statement=="card name":
+            wait.until(EC.element_to_be_clickable((By.XPATH,card_name))).send_keys(values)
+
+        elif statement=="card number":
+            driver.find_element_by_xpath(card_number).send_keys(values)
+
+    except Exception as e:
+        print('Sign in auth button cannot click' ,format(e))
+
+def enter_only_pw(statement,txt_only_password):
+    try:
+        btn_signin='//*[@id="signInSubmit"]'
+
+        import common as com
+        print("enter your "+ statement +" !!!")
+        user = com.talk(statement)
+        values=user.replace(" ", "")
+
+        wait.until(EC.element_to_be_clickable((By.XPATH,txt_only_password))).send_keys(values)
+        wait.until(EC.element_to_be_clickable((By.XPATH,btn_signin))).click()
+    except Exception as e:
+        print('Sign in auth button cannot click' ,format(e))
+
+def amazon_click_list(getlist,getclass,getitem,setnumber):
+    try:
+        html_list = driver.find_element_by_xpath(getlist)
+        items = html_list.find_elements_by_class_name(getclass)
+        count =len(items)
+        print("There are "+str(count)+" items in this list")
+        
+        if setnumber in range (count):
+            try:
+                sp.speak("Opening " + str(setnumber) + " link") 
+                driver.find_element_by_xpath(getitem).click()
+            except:
+                sp.speak("sorry.you cannot open that link") 
+                print ("Unexpected error")
+    except Exception as ee:
+        print (ee)

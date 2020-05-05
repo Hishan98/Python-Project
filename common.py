@@ -64,6 +64,21 @@ def talk(condition):
             elif text == "back":
                 import Engine as eng
                 eng.back()
+
+            elif text == "otp":
+                print("Enter The OTP code")
+                if text != statement:
+                    usrpss = text
+
+            elif text == "card name":
+                print("Enter your card name")
+                if text != statement:
+                    usrpss = text
+
+            elif text == "card number":
+                print("Enter your card number")
+                if text != statement:
+                    usrpss = text
         except:
             print("Unknown Command !!!")
 
