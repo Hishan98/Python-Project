@@ -55,9 +55,14 @@ def commands(text):
         btn_resendOTP='//*[@id="cvf-page-content"]/div/div/div[1]/form/div[6]/a'
         eng.resend_otp(btn_resendOTP)
 
-    elif text=="exit": 
+    elif text=="close": 
+        import speech as sp
+        sp.speak("Thank You For using Amazon") 
         url='chrome-search://local-ntp/local-ntp.html'
         eng.newtab(url)
+        import webreopening as Main
+        Main.site_selection2()
+
     elif text=="back":
         eng.back()
     elif "scroll up" in text:
@@ -209,3 +214,6 @@ def commands(text):
         url='https://www.amazon.com/'
         txt_searchbar='//*[@id="twotabsearchtextbox"]'
         eng.search(url,txt_searchbar)
+
+    else:
+        eng.unknown_command()

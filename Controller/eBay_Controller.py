@@ -36,6 +36,8 @@ def commands(text):
         eng.signup(btn_signup)
 
     elif text=="close": 
+        import speech as sp
+        sp.speak("Thank You For using eBay") 
         url='chrome-search://local-ntp/local-ntp.html'
         eng.newtab(url)
         import webreopening as Main
@@ -165,3 +167,6 @@ def commands(text):
         url='https://www.ebay.com/'
         txt_searchbar='//*[@id="gh-ac"]'
         eng.search(url,txt_searchbar)
+
+    else:
+        eng.unknown_command()

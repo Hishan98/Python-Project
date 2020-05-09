@@ -34,9 +34,14 @@ def commands(text):
         eng.ali_sign_up("password",txt_email,txt_password,btn_show_password)
         eng.ali_signup(btn_signup)
 
-    elif text=="exit": 
+    elif text=="close": 
+        import speech as sp
+        sp.speak("Thank You For using Aliexpress") 
         url='chrome-search://local-ntp/local-ntp.html'
         eng.newtab(url)
+        import webreopening as Main
+        Main.site_selection2()
+
     elif text=="back":
         eng.back()
     elif "scroll up" in text:

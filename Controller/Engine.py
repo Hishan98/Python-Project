@@ -193,10 +193,10 @@ def quantity(statement,txt_quantity):
         import common as com
         qty = com.talk(statement)
         
-        wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).clear()
+        # wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).clear()
         if type(qty)==type(2):
             sp.speak("setting " +str(qty)+ " items") 
-            wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).send_keys(qty)
+            wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).clear().send_keys(qty)
         else:           
             qun = w2n.word_to_num(qty)
             sp.speak("setting " +qty+ " items") 
@@ -216,9 +216,9 @@ def search(url,txt_searchbar):
                 print('Cannot search Emphty values. Please try Again by saying "search" command')
                 sp.speak("Cannot search Emphty value.")
             else:   
-                sp.speak("say OK confirm search for" +text) 
                 driver.get(url)
-                wait.until(EC.element_to_be_clickable((By.XPATH,txt_searchbar))).send_keys(text)    
+                wait.until(EC.element_to_be_clickable((By.XPATH,txt_searchbar))).send_keys(text) 
+                sp.speak("say OK confirm search for" +text)    
 
         except Exception as e:
             print('Fail Page' ,format(e))
@@ -323,7 +323,8 @@ def backspace(txt_backspace):
 
 def unknown_command():
     try:
-        sp.speak("You entered an Unknown command...")   
+        sp.speak("You entered an Unknown command...")
+        sp.speak("Enter your voice command again.")   
     except Exception as identifier:
         print('Text to speech function not working correctly :' ,format(identifier))    
 
@@ -384,25 +385,24 @@ def ali_click_list(getlist,getclass,getitem,setnumber,try_getitem):
 
 def ali_click_sub_list(getlist,gettagname,getitem,Selection,trygetlist):
     try:
-        # driver.switchTo().defaultContent()
-        
-        wait.until(EC.element_to_be_clickable((By.XPATH,getitem)))
-        driver.find_element_by_xpath(getitem).click()
-
+        driver.switch_to.window(driver.window_handles[-1])
         # wait.until(EC.element_to_be_clickable((By.XPATH,getitem)))
-        # html_list = driver.find_element_by_xpath(getlist)
-        # items = html_list.find_elements_by_class_name(gettagname)
-        # count =len(items)
-        # print("There are "+ str(count) +" items in this list")
+        # driver.find_element_by_xpath(getitem).click()
 
-        # if Selection in range (count):
-        #     try:
-        #         driver.find_element_by_xpath(getitem).click()
+        wait.until(EC.element_to_be_clickable((By.XPATH,getitem)))
+        html_list = driver.find_element_by_xpath(getlist)
+        items = html_list.find_elements_by_class_name(gettagname)
+        count =len(items)
+        print("There are "+ str(count) +" items in this list")
 
-        #     except Exception as identifier:
-        #         print('Error occoured :' ,format(identifier))
-        # else:
-        #     print("There is no such an item on this list")
+        if Selection in range (count):
+            try:
+                driver.find_element_by_xpath(getitem).click()
+
+            except Exception as identifier:
+                print('Error occoured :' ,format(identifier))
+        else:
+            print("There is no such an item on this list")
 
     except Exception as identifier:
         print('Error occoured :' ,format(identifier))
