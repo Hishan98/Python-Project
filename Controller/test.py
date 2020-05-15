@@ -20,16 +20,15 @@ chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
 global driver
 
 driver = webdriver.Chrome('C:\Windows\chromedriver.exe', options=chrome_options)
-wait = WebDriverWait(driver, 10)
+wait = WebDriverWait(driver, 50)
 
-
-driver.get("http://google.com")
-windowHandle  = driver.window_handles()
-driver.find_element_by_css_selector("body").send_keys(Keys.CONTROL + "t")
-
-ArrayList tabs = new ArrayList (driver.getWindowHandles());
-System.out.println(tabs.size());
-driver.switchTo().window(tabs.get(0)); 
-
-driver.get("https://stackoverflow.com/questions/34948175/switching-and-focusing-a-newly-opened-tab-in-selenium");
-driver.find_element_by_xpath('/html/body/header/div/ol[2]/li[3]/a').click()
+driver.get("https://www.aliexpress.com/item/32969951619.html?spm=a2g0o.productlist.0.0.10a027c9UKlAN8&s=p&ad_pvid=2020051005023912852232612020007719627_1&algo_pvid=ef0a37e9-0d95-4caa-8509-0aa59d969bae&algo_expid=ef0a37e9-0d95-4caa-8509-0aa59d969bae-0&btsid=0ab6f82c15891121589823537e2059&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_")
+txt_quantity='//*[@id="root"]/div/div[2]/div/div[2]/div[8]/span/span/span[2]/input'
+ad_close='/html/body/div[10]/div[2]/div/a'
+try:
+    
+    wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).send_keys(Keys.CONTROL, 'a')
+    wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).send_keys(5)
+    # wait.until(EC.element_to_be_clickable((By.XPATH,ad_close))).click()
+except Exception as identifier:
+    print(identifier)

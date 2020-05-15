@@ -65,3 +65,4 @@ def in_site_selection2(condition):
                 gg.google(text)
         except:
             print("Unknown Command (in_site_selection)")
+site_selection2()

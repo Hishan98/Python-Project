@@ -3,8 +3,7 @@ import speech as sp
 import speechRecognizer as recog
 
 def site_selection():
-    sp.speak("Welcome to the talk & shop Application...")
-    sp.speak("If you are a new user please refer our user manual by simply saying help")   
+    sp.speak("Welcome to the talk & shop Application...If you are a new user please refer our user manual by simply saying help")  
     text=""
     while text!="exit":
         sp.speak("Please select your web site")
@@ -35,11 +34,9 @@ def site_selection():
                 url='https://github.com/Hishan98/Python-Project/tree/master'
                 eng.Help(url)
         except:
-            print("Unknown Command (site_selection)")
-
-        import Engine as eng
-        eng.driver.close()   
-
+            print("Unknown Command (site_selection)")   
+# hishansjc@yahoo.com
+# AIapplication1998
 def in_site_selection(condition):
     text=""
     sp.speak("Please select what you want to do in here") 
@@ -51,8 +48,8 @@ def in_site_selection(condition):
                 ebay.commands(text)
 
             elif condition=="aliexpress":
-                import aliExpress_Controller as aliexp
-                aliexp.commands(text)
+                import aliExpress_Controller as ali
+                ali.commands(text)
                 
             elif condition=="Amazon":
                 import Amazon_Controller as amazon

@@ -104,14 +104,15 @@ def commands(text):
 
     elif "first item" in text:
 
-        trygetlist='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div[1]/ul'
+        maindiv='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div'
+        subdivs='sku-property'
 
         getlist='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div[1]/ul'
         gettagname='sku-property-item'
         Selection=1
         getitem='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div/ul/li[1]/div'
 
-        eng.ali_click_sub_list(getlist,gettagname,getitem,Selection,trygetlist)
+        eng.ali_click_sub_list(getlist,gettagname,getitem,Selection,maindiv,subdivs)
         
     elif "second item" in text:
         getlist='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div/ul'
@@ -143,7 +144,7 @@ def commands(text):
 
     elif "set" in text:
         txt_quantity='//*[@id="root"]/div/div[2]/div/div[2]/div[8]/span/span/span[2]/input'
-        eng.quantity("quentity",txt_quantity)
+        eng.ali_quantity("quentity",txt_quantity)
 
     # Buying Options
 
@@ -164,12 +165,7 @@ def commands(text):
         eng.confirm_pay(btn_confirm_pay)
 
     elif "close ads" in text:
-        btn_close='/html/body/div[10]/div[2]/div/a'
-        eng.close_ads(btn_close)
-    #Selling Options
-    # elif "sale" in text:
-    #     import ebay_sell as eb
-    #     eng.sell(wait,driver)
+        eng.close_ads()
 
     elif "search" in text:
         url='https://www.aliexpress.com/'

@@ -196,7 +196,7 @@ def quantity(statement,txt_quantity):
         # wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).clear()
         if type(qty)==type(2):
             sp.speak("setting " +str(qty)+ " items") 
-            wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).clear().send_keys(qty)
+            wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).send_keys(qty)
         else:           
             qun = w2n.word_to_num(qty)
             sp.speak("setting " +qty+ " items") 
@@ -383,13 +383,21 @@ def ali_click_list(getlist,getclass,getitem,setnumber,try_getitem):
     except Exception as ee:
         print (ee)
 
-def ali_click_sub_list(getlist,gettagname,getitem,Selection,trygetlist):
+def ali_click_sub_list(getlist,gettagname,getitem,Selection,maindiv,subdivs):
     try:
         driver.switch_to.window(driver.window_handles[-1])
-        # wait.until(EC.element_to_be_clickable((By.XPATH,getitem)))
-        # driver.find_element_by_xpath(getitem).click()
-
         wait.until(EC.element_to_be_clickable((By.XPATH,getitem)))
+
+        min_div = driver.find_element_by_xpath(maindiv)
+        sub_divs = min_div.find_elements_by_class_name(subdivs)
+        divcount =len(sub_divs)
+        print("There are "+ str(divcount) +" DIVS' in this list")
+
+        title=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div[1]/div')
+        get_title = title.get_attribute('innerHTML')
+        print ('title is '+ get_title.strip())
+
+
         html_list = driver.find_element_by_xpath(getlist)
         items = html_list.find_elements_by_class_name(gettagname)
         count =len(items)
@@ -398,7 +406,6 @@ def ali_click_sub_list(getlist,gettagname,getitem,Selection,trygetlist):
         if Selection in range (count):
             try:
                 driver.find_element_by_xpath(getitem).click()
-
             except Exception as identifier:
                 print('Error occoured :' ,format(identifier))
         else:
@@ -407,11 +414,35 @@ def ali_click_sub_list(getlist,gettagname,getitem,Selection,trygetlist):
     except Exception as identifier:
         print('Error occoured :' ,format(identifier))
         
-def close_ads(btn_close):
+def close_ads():
     try:
-        wait.until(EC.element_to_be_clickable((By.XPATH,btn_close))).click()
-    except:
-        print('connot close the ads')
+        btn_close='/html/body/div[10]/div[2]/div/a'
+        # frame='//*[@id="localstorage-proxy-ifr-alibabadotcom2"]'
+        # driver.switch_to.frame(driver.find_element_by_xpath(frame))
+        # wait.until(EC.element_to_be_clickable((By.XPATH,btn_close))).click()
+        # driver.switch_to_default_content()
+
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,btn_close))).click()   
+    except Exception as ee:
+        print('connot close the ad :' +ee)
+
+def ali_quantity(statement,txt_quantity):
+    try:
+        import common as com
+        qty = com.talk(statement)
+
+        wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).send_keys(Keys.CONTROL, 'a')
+
+        if type(qty)==type(2):
+            sp.speak("setting " +str(qty)+ " items") 
+            wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).send_keys(qty)
+        else:           
+            qun = w2n.word_to_num(qty)
+            sp.speak("setting " +qty+ " items") 
+            wait.until(EC.element_to_be_clickable((By.XPATH,txt_quantity))).send_keys(qun)
+    except Exception as e:
+        sp.speak("cannot identify the number") 
+        print ("Unidentifyied number type",format(e))
         
 # _______________________________Amazon Diffrent controllers________________________________
 
