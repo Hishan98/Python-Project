@@ -228,6 +228,7 @@ def okay(btn_search_ok):
     try:
         sp.speak("Searching..") 
         driver.find_element_by_xpath(btn_search_ok).click()
+        sp.speak("Select an item")    
     except Exception as identifier:
         print('Fail Page' ,format(identifier))
 
@@ -383,37 +384,78 @@ def ali_click_list(getlist,getclass,getitem,setnumber,try_getitem):
     except Exception as ee:
         print (ee)
 
-def ali_click_sub_list(getlist,gettagname,getitem,Selection,maindiv,subdivs):
+def ali_click_sub_list(maindiv,subdivs):
     try:
         driver.switch_to.window(driver.window_handles[-1])
-        wait.until(EC.element_to_be_clickable((By.XPATH,getitem)))
+        wait.until(EC.element_to_be_clickable((By.XPATH,maindiv)))
 
         min_div = driver.find_element_by_xpath(maindiv)
         sub_divs = min_div.find_elements_by_class_name(subdivs)
         divcount =len(sub_divs)
         print("There are "+ str(divcount) +" DIVS' in this list")
 
-        title=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div[1]/div')
-        get_title = title.get_attribute('innerHTML')
-        print ('title is '+ get_title.strip())
+        if(divcount==1):
 
+            select_item(1)
 
-        html_list = driver.find_element_by_xpath(getlist)
-        items = html_list.find_elements_by_class_name(gettagname)
+        elif(divcount==2):
+
+            select_item(1)
+            select_item(2)
+
+        elif(divcount==3):
+
+            select_item(1)
+            select_item(2)
+            select_item(3)
+
+    except Exception as identifier:
+        print('Error occoured :' ,format(identifier))
+
+def select_item(divno):
+    try:
+        xpath_title='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div['+str(divno)+']/div'
+        maketitle=driver.find_element_by_xpath(xpath_title).text
+        
+        setitemno=''
+        while not setitemno:
+            try:
+                import speechRecognizer as recog
+                print('Select '+maketitle+' type')
+                sp.speak('Select '+maketitle+' type?') 
+                itemNo = recog.talk()
+
+                if type(itemNo)==type(2):
+                    setitemno= itemNo
+                else:           
+                    setitemno = w2n.word_to_num(itemNo)
+
+            except Exception as warn:
+                print('Error occoured: '+warn)
+                print('Cannot hear properly please try again')
+
+        xpath_ullist='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div['+str(divno)+']/ul'
+        class_list='sku-property-item'
+
+        xpath_item='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div['+str(divno)+']/ul/li['+str(setitemno)+']/div'
+
+        html_list = driver.find_element_by_xpath(xpath_ullist)
+        items = html_list.find_elements_by_class_name(class_list)
         count =len(items)
         print("There are "+ str(count) +" items in this list")
 
-        if Selection in range (count):
+        if setitemno in range (count):
             try:
-                driver.find_element_by_xpath(getitem).click()
+                driver.find_element_by_xpath(xpath_item).click()
             except Exception as identifier:
                 print('Error occoured :' ,format(identifier))
         else:
             print("There is no such an item on this list")
-
     except Exception as identifier:
-        print('Error occoured :' ,format(identifier))
-        
+        print('Error occoured (select item) :' ,format(identifier))
+        print('cannot convert regular word to number, try it again')
+        select_item(divno)
+
 def close_ads():
     try:
         btn_close='/html/body/div[10]/div[2]/div/a'

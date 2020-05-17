@@ -102,17 +102,17 @@ def commands(text):
 
     # Item selections (Colors/Sizes & etc.)
 
-    elif "first item" in text:
+    elif "select type" in text:
 
         maindiv='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div'
         subdivs='sku-property'
 
-        getlist='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div[1]/ul'
-        gettagname='sku-property-item'
-        Selection=1
-        getitem='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div/ul/li[1]/div'
+        # getlist='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div[1]/ul'
+        # gettagname='sku-property-item'
+        # Selection=1
+        # getitem='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div/ul/li[1]/div'
 
-        eng.ali_click_sub_list(getlist,gettagname,getitem,Selection,maindiv,subdivs)
+        eng.ali_click_sub_list(maindiv,subdivs)
         
     elif "second item" in text:
         getlist='//*[@id="root"]/div/div[2]/div/div[2]/div[7]/div/div/ul'
